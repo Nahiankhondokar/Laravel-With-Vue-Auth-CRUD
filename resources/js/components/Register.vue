@@ -41,13 +41,44 @@
                         v-model="password_confirmation"
                     />
                 </div>
-                <button type="submit" class="btn btn-primary">Sign in</button>
+                <button type="submit" class="btn btn-primary">Register</button>
+                <router-link :to="{ name: 'login' }" class="btn bg-primary"
+                    >Have an account</router-link
+                >
             </form>
         </div>
     </div>
 </template>
 
-<script setup></script>
+<script>
+export default {
+    name: "Register",
+    data() {
+        return {
+            name: "",
+            email: "",
+            password: "",
+            password_confirmation: "",
+        };
+    },
+    methods: {
+        handleUserRegistration() {
+            axios
+                .post("http://localhost:8000/api/v1/register", {
+                    name: this.name,
+                    email: this.email,
+                    password: this.password,
+                    password_confirmation: this.password_confirmation,
+                })
+                .then((res) => {
+                    console.log(res);
+                    // this.$route.push("/");
+                    router.push({ name: "login" });
+                });
+        },
+    },
+};
+</script>
 
 <style scoped>
 .login_form {
@@ -63,5 +94,9 @@
     width: 50%;
     padding: 20px 10px;
     border-radius: 5px;
+}
+.login_form form a {
+    float: right;
+    color: white;
 }
 </style>

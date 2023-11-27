@@ -23,7 +23,10 @@
                         v-model="password"
                     />
                 </div>
-                <button type="submit" class="btn btn-primary">Sign in</button>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <router-link :to="{ name: 'register' }" class="btn bg-primary"
+                    >Register an accoutn</router-link
+                >
             </form>
         </div>
     </div>
@@ -32,9 +35,24 @@
 <script>
 export default {
     name: "Login",
+    data() {
+        return {
+            email: "",
+            password: "",
+        };
+    },
     methods: {
-        handleUserLogin($e) {
-            console.log($e.target);
+        handleUserLogin() {
+            axios
+                .post("http://localhost:8000/api/v1/login", {
+                    email: this.email,
+                    password: this.password,
+                })
+                .thne((res) => {
+                    console.log();
+                })
+                .catch();
+            console.log($e.target.value.email);
         },
     },
 };
@@ -54,5 +72,10 @@ export default {
     width: 50%;
     padding: 20px 10px;
     border-radius: 5px;
+}
+
+.login_form form a {
+    float: right;
+    color: white;
 }
 </style>

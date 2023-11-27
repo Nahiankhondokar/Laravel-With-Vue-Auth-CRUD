@@ -17,6 +17,7 @@ const app = createApp({
     },
 });
 
-app.use(routes).mount('#app');
+app.use(routes)
+app.mount('#app');
 
 
