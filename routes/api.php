@@ -4,6 +4,10 @@ use App\Http\Controllers\API\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+Route::get('{any?}', function () {
+    return view('welcome');
+})->where('any', '.*');
+
 Route::get('/login', function(){
     return response()->json([
         'message'   => 'Unauthenticate',
