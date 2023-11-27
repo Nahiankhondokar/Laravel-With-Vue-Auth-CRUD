@@ -3,6 +3,8 @@ import Employee from './components/Employee.vue';
 import Login from './components/Login.vue';
 import Register from './components/Register.vue';
 import Dashboard from './components/Dashboard.vue';
+import NotFound from './components/NotFound.vue';
+import routes from './router/index.js';
 import './bootstrap';
 
 const app = createApp({
@@ -11,9 +13,10 @@ const app = createApp({
         Employee,
         Login,
         Register,
-    }
+        NotFound
+    },
 });
 
-app.mount('#app');
+app.use(routes).mount('#app');
 
 

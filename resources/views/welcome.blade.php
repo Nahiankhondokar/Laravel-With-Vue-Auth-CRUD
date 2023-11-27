@@ -10,10 +10,7 @@
 </head>
 <body>
     <div id="app">
-        {{-- <employee /> --}}
-        {{-- <login /> --}}
-        <dashboard />
-        {{-- <register /> --}}
+        <router-view />
     </div>
 
     @vite('resources/js/app.js')
