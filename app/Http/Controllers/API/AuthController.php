@@ -55,4 +55,15 @@ class AuthController extends Controller
             'message'   => 'User successfully logout',
         ]);
     }
+
+    public function me(): JsonResponse
+    {
+        $user = Auth::user();
+        
+        return response()->json([
+            'status'=> 'true',
+            'message'   => 'User information',
+            'data'      => $user
+        ]);
+    }
 }
