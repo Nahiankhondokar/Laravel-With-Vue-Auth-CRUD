@@ -9,7 +9,12 @@
                         type="text"
                         class="form-control"
                         placeholder="Name"
-                        v-model="name"
+                        v-model="login.name"
+                    />
+                    <div
+                        v-if="login.errors.has('name')"
+                        v-html="login.errors.get('name')"
+                        class="text-danger"
                     />
                 </div>
                 <div class="form-group">
@@ -19,7 +24,12 @@
                         class="form-control"
                         id="inputEmail"
                         placeholder="Email"
-                        v-model="email"
+                        v-model="login.email"
+                    />
+                    <div
+                        v-if="login.errors.has('email')"
+                        v-html="login.errors.get('email')"
+                        class="text-danger"
                     />
                 </div>
                 <div class="form-group">
@@ -29,7 +39,12 @@
                         class="form-control"
                         id="inputPassword"
                         placeholder="Password"
-                        v-model="password"
+                        v-model="login.password"
+                    />
+                    <div
+                        v-if="login.errors.has('password')"
+                        v-html="login.errors.get('password')"
+                        class="text-danger"
                     />
                 </div>
                 <div class="form-group">
@@ -38,7 +53,7 @@
                         type="password"
                         class="form-control"
                         placeholder="Password"
-                        v-model="password_confirmation"
+                        v-model="login.password_confirmation"
                     />
                 </div>
                 <button type="submit" class="btn btn-primary">Register</button>
@@ -51,19 +66,22 @@
 </template>
 
 <script>
+import Form from "vform";
 export default {
     name: "Register",
     data() {
         return {
-            name: "",
-            email: "",
-            password: "",
-            password_confirmation: "",
+            login: new Form({
+                name: "",
+                email: "",
+                password: "",
+                password_confirmation: "",
+            }),
         };
     },
     methods: {
         handleUserRegistration() {
-            axios
+            this.login
                 .post("http://localhost:8000/api/v1/register", {
                     name: this.name,
                     email: this.email,
@@ -72,8 +90,7 @@ export default {
                 })
                 .then((res) => {
                     console.log(res);
-                    // this.$route.push("/");
-                    router.push({ name: "login" });
+                    this.$router.push({ path: "/" });
                 });
         },
     },
