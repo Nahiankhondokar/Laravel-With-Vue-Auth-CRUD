@@ -67,6 +67,7 @@
 
 <script>
 import Form from "vform";
+
 export default {
     name: "Register",
     data() {
@@ -77,23 +78,35 @@ export default {
                 password: "",
                 password_confirmation: "",
             }),
+            user: {},
         };
     },
     methods: {
         handleUserRegistration() {
             this.login
-                .post("http://localhost:8000/api/v1/register", {
+                .post("/api/v1/register", {
                     name: this.name,
                     email: this.email,
                     password: this.password,
                     password_confirmation: this.password_confirmation,
                 })
                 .then((res) => {
-                    console.log(res);
-
                     this.$router.push({ path: "/" });
+                    this.$toast.open({
+                        message: res.data.message,
+                        type: "success",
+                    });
                 });
         },
+        getAuthUser() {
+            axios.get("/api/v1/me").then((res) => {
+                console.log(res.data.data);
+                this.user = res.data.data;
+            });
+        },
+    },
+    mounted() {
+        this.getAuthUser();
     },
 };
 </script>

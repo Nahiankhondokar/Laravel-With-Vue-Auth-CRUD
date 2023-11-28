@@ -5,8 +5,10 @@ import Register from './components/Register.vue';
 import Dashboard from './components/Dashboard.vue';
 import NotFound from './components/NotFound.vue';
 import routes from './router/index.js';
+import ToastPlugin from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-bootstrap.css';
 import './bootstrap';
-
+ 
 const app = createApp({
     components : {
         Dashboard,
@@ -18,6 +20,7 @@ const app = createApp({
 });
 
 app.use(routes)
+app.use(ToastPlugin);
 app.mount('#app');
 
 
