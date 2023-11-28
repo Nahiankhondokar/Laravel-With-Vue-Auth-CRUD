@@ -47,4 +47,19 @@ class EmployeeController extends Controller
         
         return $this->apiSuccessResponse('Employee is deleted');
     }
+
+    public function employeeSearch(Request $request): JsonResponse
+    {
+        $terms = '%'.$request->search.'%';
+        $employee = Employee::query()
+        ->where('name', 'LIKE', $terms)
+        ->orWhere('phone', 'LIKE', $terms)
+        ->get();
+
+        if($employee->isEmpty()){
+            return $this->apiErrorResponse('Data not found!');
+        }
+          
+        return $this->apiSuccessResponse('Employee search result', $employee);
+    }
 }

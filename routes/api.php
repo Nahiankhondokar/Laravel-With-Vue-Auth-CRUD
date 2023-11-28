@@ -27,6 +27,7 @@ Route::prefix('v1')->group(function(){
             Route::get('/show/{employee}', [EmployeeController::class, 'show']);
             Route::post('/update/{employee}', [EmployeeController::class, 'update']);
             Route::get('/delete/{employee}', [EmployeeController::class, 'delete']);
+            Route::get('/search', [EmployeeController::class, 'employeeSearch']);
         });
        
         Route::post('/department/create', [DepartmentController::class, 'store']);
