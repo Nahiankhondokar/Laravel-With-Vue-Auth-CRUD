@@ -10,6 +10,12 @@ use Illuminate\Http\Request;
 
 class AchievementController extends Controller
 {
+    public function index(): JsonResponse
+    {
+        $achievements = Achievement::with('employee')->get();
+        return $this->apiSuccessResponse('Achievement list', $achievements);
+    }
+
     public function store (AchievementRequest $request): JsonResponse
     {
         $achievement = Achievement::create($request->validated());

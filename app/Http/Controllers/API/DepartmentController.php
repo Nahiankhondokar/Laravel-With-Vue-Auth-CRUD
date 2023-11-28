@@ -10,6 +10,12 @@ use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
 {
+    public function index(): JsonResponse
+    {
+        $departments = Department::with('employee')->get();
+        return $this->apiSuccessResponse('Department list', $departments);
+    }
+
     public function store (DepartmentRequest $request) : JsonResponse
     {
         $department = Department::create($request->validated());

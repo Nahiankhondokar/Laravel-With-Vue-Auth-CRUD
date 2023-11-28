@@ -12,7 +12,7 @@ class EmployeeController extends Controller
 {
     public function index(): JsonResponse
     {
-        $employee = Employee::query()->with('department', 'achievement')->get();
+        $employee = Employee::query()->with('department', 'achievement')->paginate(10);
         return $this->apiSuccessResponse('Employee list', $employee);
     }
 
