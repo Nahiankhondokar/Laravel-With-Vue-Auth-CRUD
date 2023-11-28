@@ -21,8 +21,12 @@ Route::prefix('v1')->group(function(){
         Route::get('/logout', [AuthController::class, 'logout']);
         Route::get('/authUser', [AuthController::class, 'authUser']);
 
-        Route::post('/employee-create', [EmployeeController::class, 'store']);
-        Route::get('/employee-list', [EmployeeController::class, 'index']);
+        Route::prefix('employee')->group(function(){
+            Route::post('/create', [EmployeeController::class, 'store']);
+            Route::get('/list', [EmployeeController::class, 'index']);
+            Route::post('/update/{employee}', [EmployeeController::class, 'update']);
+        });
+       
 
         Route::post('/department-create', [DepartmentController::class, 'store']);
         Route::post('/achievement-create', [AchievementController::class, 'store']);
