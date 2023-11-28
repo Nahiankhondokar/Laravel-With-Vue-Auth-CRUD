@@ -56,14 +56,22 @@ class AuthController extends Controller
         ]);
     }
 
-    public function me(): JsonResponse
+    public function authUser(): JsonResponse
     {
         $user = Auth::user();
+        if(!$user){
+            return response()->json([
+                'message'   => 'Unauthorized',
+            ]);
+        }
         
         return response()->json([
-            'status'=> 'true',
+            'status'    => 'true',
             'message'   => 'User information',
             'data'      => $user
         ]);
+        
+        
+        
     }
 }
