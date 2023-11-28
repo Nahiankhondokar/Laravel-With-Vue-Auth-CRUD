@@ -19,7 +19,7 @@ Route::prefix('v1')->group(function(){
 
     Route::middleware('auth:api')->group(function(){
         Route::get('/logout', [AuthController::class, 'logout']);
-        Route::get('/authUser', [AuthController::class, 'authUser']);
+        Route::get('/auth-user', [AuthController::class, 'authUser']);
 
         Route::prefix('employee')->group(function(){
             Route::post('/create', [EmployeeController::class, 'store']);

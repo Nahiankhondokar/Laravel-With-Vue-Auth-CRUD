@@ -7,7 +7,6 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -21,57 +20,34 @@ class AuthController extends Controller
             $token = $user->createToken('accessToken')->accessToken;
 
             return response()->json([
-                'status'=> 'true',
-                'data'  => [
-                    'message'   => 'Login successfully',
-                    'token'     => $token,
-                    'user'      => $user
-                ]
+                'status'        => 'success',
+                'message'       => 'User login successfully',
+                'accessToken'   => $token,
+                'data'          => $user
             ]);
         }
-        return response()->json([
-            'message'  => 'Wrong Credentials'
-        ], 401);
+        return $this->apiSuccessResponse('Wrong Credentials', '', 401);
     }
 
     public function register(RegisterRequest $request): JsonResponse
     {
         $user = User::create($request->all());
-        return response()->json([
-            'status'=> 'true',
-            'message'   => 'User registration successfull',
-                'data'  => [
-                    'user'      => $user
-                ]
-        ]);
+        return $this->apiSuccessResponse('User registration successfull', $user);
     }
 
     public function logout(): JsonResponse
     {
         auth()->user()->token()->revoke();
-
-        return response()->json([
-            'status'=> 'true',
-            'message'   => 'User successfully logout',
-        ]);
+        return $this->apiSuccessResponse('User successfully logout');
     }
 
     public function authUser(): JsonResponse
     {
         $user = Auth::user();
         if(!$user){
-            return response()->json([
-                'message'   => 'Unauthorized',
-            ]);
+            return $this->apiSuccessResponse('Unauthorized');
         }
         
-        return response()->json([
-            'status'    => 'true',
-            'message'   => 'User information',
-            'data'      => $user
-        ]);
-        
-        
-        
+        return $this->apiSuccessResponse('User information', $user);
     }
 }
