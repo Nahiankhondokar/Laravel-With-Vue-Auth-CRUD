@@ -10,7 +10,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
-    public function apiSuccessResponse($message, $data, $code = 200){
+    public function apiSuccessResponse($message, $data=null, $code = 200){
         return response()->json([
             'status'    => 'true',
             'message'   => $message,
@@ -18,7 +18,7 @@ class Controller extends BaseController
         ], $code);
     }
 
-    public function apiErrorResponse($message, $data, $code = 404){
+    public function apiErrorResponse($message, $data=null, $code = 404){
         return response()->json([
             'status'    => 'false',
             'message'   => $message,

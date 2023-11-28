@@ -10,13 +10,13 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-    public function index (): JsonResponse
+    public function index(): JsonResponse
     {
         $employee = Employee::query()->with('department', 'achievement')->get();
         return $this->apiSuccessResponse('Employee list', $employee);
     }
 
-    public function store (EmployeeRequest $request): JsonResponse
+    public function store(EmployeeRequest $request): JsonResponse
     {
         $employee = Employee::create($request->validated());
         $employeeIds = $request->achievement_id;
@@ -25,12 +25,20 @@ class EmployeeController extends Controller
         return $this->apiSuccessResponse('Employee is created', $employee);
     }
 
-    public function update (Request $request, Employee $employee): JsonResponse
+    public function update(Request $request, Employee $employee): JsonResponse
     {
         $employee->update($request->except('achievement_id'));
         $employeeIds = $request->achievement_id;
         $employee->achievement()->sync($employeeIds);
         
         return $this->apiSuccessResponse('Employee is updated', $employee);
+    }
+
+    public function delete(Employee $employee): JsonResponse
+    {
+        $employee->achievement()->detach();
+        $employee->delete();
+        
+        return $this->apiSuccessResponse('Employee is deleted');
     }
 }
