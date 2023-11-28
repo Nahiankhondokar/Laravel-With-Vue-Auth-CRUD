@@ -14,4 +14,8 @@ class Employee extends Model
     public function department(){
         return $this->belongsTo(Department::class);
     }
+
+    public function achievement(){
+        return $this->belongsToMany(Achievement::class, 'achievement_employees');
+    }
 }

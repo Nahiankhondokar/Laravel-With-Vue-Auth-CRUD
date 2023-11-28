@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('achievement_employees', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('achievement_id')->constrained();
+            $table->foreignId('employee_id')->constrained();
             $table->timestamps();
         });
     }

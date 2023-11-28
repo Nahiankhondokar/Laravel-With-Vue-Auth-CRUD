@@ -12,13 +12,16 @@ class EmployeeController extends Controller
 {
     public function index (): JsonResponse
     {
-        $employee = Employee::query()->with('department')->get();
+        $employee = Employee::query()->with('department', 'achievement')->get();
         return $this->apiSuccessResponse('Employee list', $employee);
     }
 
     public function store (EmployeeRequest $request): JsonResponse
     {
         $employee = Employee::create($request->validated());
+        $employeeIds = Employee::query()->pluck('id');
+        $employee->achievement()->attach($employeeIds);
+        
         return $this->apiSuccessResponse('Employee is created', $employee);
     }
 }
