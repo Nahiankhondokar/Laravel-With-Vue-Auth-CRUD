@@ -25,9 +25,9 @@ class EmployeeController extends Controller
         return $this->apiSuccessResponse('Employee is created', $employee);
     }
 
-    public function update (EmployeeRequest $request, Employee $employee): JsonResponse
+    public function update (Request $request, Employee $employee): JsonResponse
     {
-        $employee->update($request->validated());
+        $employee->update($request->except('achievement_id'));
         $employeeIds = $request->achievement_id;
         $employee->achievement()->sync($employeeIds);
         
