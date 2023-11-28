@@ -18,15 +18,19 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a
+                                <router-link
                                     class="nav-link active"
                                     aria-current="page"
-                                    href="#"
-                                    >Home</a
+                                    :to="{ name: 'dashboard' }"
+                                    >Home</router-link
                                 >
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Employee</a>
+                                <router-link
+                                    class="nav-link"
+                                    :to="{ name: 'employee' }"
+                                    >Employee</router-link
+                                >
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Logout</a>
@@ -36,18 +40,13 @@
                 </div>
             </nav>
         </div>
-        <Employee />
+        <router-view />
     </div>
 </template>
 
 <script>
-import Employee from "./Employee.vue";
-
 export default {
-    name: "Dashboard",
-    components: {
-        Employee,
-    },
+    name: "App",
 };
 </script>
 <style scoped></style>

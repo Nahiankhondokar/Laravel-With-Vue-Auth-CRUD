@@ -1,9 +1,11 @@
 import {createRouter, createWebHistory} from 'vue-router';
-import Login from '../components/Login.vue';
-import Register from '../components/Register.vue';
-import Employee from '../components/Employee.vue';
-import Dashboard from '../components/Dashboard.vue';
-import NotFound from '../components/NotFound.vue';
+import Login from '../components/Auth/Login.vue';
+import Register from '../components/Auth/Register.vue';
+import Employee from '../components/Employee/Employee.vue'; 
+import EmployeeEdit from '../components/Employee/EmployeeEdit.vue'; 
+import EmployeeCreate from '../components/Employee/EmployeeCreate.vue';
+import Dashboard from '../components/Dashboard/Dashboard.vue';
+import NotFound from '../components//NotFound/NotFound.vue';
 
 const routes = [
     {
@@ -26,11 +28,16 @@ const routes = [
         component : Employee,
         name : 'employee'
     },
-    // {
-    //     path : '/employee/:id',
-    //     component : Employee,
-    //     name : 'employee'
-    // },
+    {
+        path : '/employee-create',
+        component : EmployeeCreate,
+        name : 'employee-create'
+    },
+    {
+        path : '/employee-edit/:id',
+        component : EmployeeEdit,
+        name : 'employee-edit'
+    },
     {
         path : '/:pathMatch(.*)*',
         component : NotFound,
