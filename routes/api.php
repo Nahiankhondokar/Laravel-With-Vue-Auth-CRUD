@@ -24,6 +24,7 @@ Route::prefix('v1')->group(function(){
         Route::prefix('employee')->group(function(){
             Route::post('/create', [EmployeeController::class, 'store']);
             Route::get('/list', [EmployeeController::class, 'index']);
+            Route::get('/show/{employee}', [EmployeeController::class, 'show']);
             Route::post('/update/{employee}', [EmployeeController::class, 'update']);
             Route::get('/delete/{employee}', [EmployeeController::class, 'delete']);
         });

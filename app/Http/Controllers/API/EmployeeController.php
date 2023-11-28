@@ -16,6 +16,12 @@ class EmployeeController extends Controller
         return $this->apiSuccessResponse('Employee list', $employee);
     }
 
+    public function show(Employee $employee): JsonResponse
+    {
+        $employee->load('department', 'achievement');
+        return $this->apiSuccessResponse('Employee list', $employee);
+    }
+
     public function store(EmployeeRequest $request): JsonResponse
     {
         $employee = Employee::create($request->validated());
