@@ -37,7 +37,6 @@
                                     {{ item.name }}
                                 </li>
                             </ul>
-                            <!-- {{ employee.achievement[1]?.name }} -->
                         </td>
                         <td>
                             <a
@@ -85,8 +84,7 @@ export default {
                     },
                 });
 
-                this.employees = response.data.data;
-                console.log(this.employees);
+                this.employees = response.data.data.data;
             } catch (error) {
                 console.error("Error fetching data:", error);
             }

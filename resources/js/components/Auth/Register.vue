@@ -100,7 +100,6 @@ export default {
         },
         getAuthUser() {
             axios.get("/api/v1/authUser").then((res) => {
-                console.log(res.data.data);
                 this.user = res.data.data;
             });
         },
