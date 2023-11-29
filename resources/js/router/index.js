@@ -39,6 +39,11 @@ const routes = [
         name : 'employee-edit'
     },
     {
+        path : '/employee-delete/:id',
+        component : Employee,
+        name : 'employee-delete'
+    },
+    {
         path : '/:pathMatch(.*)*',
         component : NotFound,
         name : 'notfound'
