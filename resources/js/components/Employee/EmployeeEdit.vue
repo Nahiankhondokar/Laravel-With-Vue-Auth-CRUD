@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="login_form">
-            <form class="bg-light" @submit.prevent="handleEmployeeCreate">
+            <form class="bg-light" @submit.prevent="handleEmployeeUpdate">
                 <h3 class="text-center">Employee Edit</h3>
                 <div class="form-group">
                     <label for="inputEmail">Name</label>
@@ -97,14 +97,11 @@ export default {
             },
             departments: [],
             achievements: [],
-            errors: {},
         };
     },
     methods: {
-        async handleEmployeeCreate() {
-            this.errors = [];
-            const token =
-                "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiOGJmMWNjMmE3MGZmZDUyOWYzMDFmM2U2OGI4YWMyZDhiYTdjNmNkOTY5MzcwZmM3YjQ3YzE2NGUyMjRiNjcwMDYwM2FlYTM2YjUxZjc3MzMiLCJpYXQiOjE3MDEyMDU5ODQuMTEwNjc4LCJuYmYiOjE3MDEyMDU5ODQuMTEwNjg2LCJleHAiOjE3MzI4MjgzODMuODQ3OTczLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.DhcQSYIbw-FPaLCqf2NozhA4Gu9zzCTtlt_G3gkRsLgXgXqBVGJMVLltGNt_cIxUTzs5tTLv0HbPul50gi-lo7oqs3OoEVETXrgao-jDkbGvXZcFI-TpPlOjYh97wgrHzuucy-sjoYTO5cDgfoc6tFtncNE2zrgLTLVLE7RVeASJJh5d4B2-jdAGxlCfFap2XHRHSVWCRges6e2rSZ4jg5lnrFKKCgyo_dhiP32rgESO40ymojZQXa3zDtIjGYB-6xRvQxsGK-rqP1lyNvI0sQU532d2wOXGea5_mAW1qZDPHAPpI_QDFWUEzr3_bMQCZ7NlKSuv0G93PymSkD0z8focwtaX-8hwQqYYWTY0Ukb9ZjKoORvtslMsZ9RcqUFXnyfzyeOzMJA0WUS2LH6L5Hs5EL11n_gyrKTj6L55PXDcbxMR2DeLfEGh02JSrgDzq5Ygpv6zXpauNOvaVql8TuB2QqycjuRTS7fHKxlQ4alIWSdLgz1_8RZHIprq-IujKl8naVgIsocrvUS4lpDLWLUIfQHEhJPtu90URiR8fY91foU_y6d2E5sMdDGt11A_uInePclftpZBpTWZNZxtw5mqoD_jKh2rupXegKRKBN2cGGlmyj7kfHdqvYdDmI2gf2mlW8gmBDajHXdX8M__738ayJhkcgG1RaZQCOs-6mg";
+        async handleEmployeeUpdate() {
+            const token = localStorage.getItem("accessToken");
 
             const formData = new FormData();
             formData.append("name", this.employee.name);
@@ -123,7 +120,13 @@ export default {
             };
 
             await axios
-                .post("/api/v1/employee/create", formData, { headers })
+                .post(
+                    `/api/v1/employee/update/${this.$route.params.id}`,
+                    formData,
+                    {
+                        headers,
+                    }
+                )
                 .then((response) => {
                     this.errors = {};
                     this.$router.push({ name: "employee" });
@@ -133,15 +136,11 @@ export default {
                     });
                 })
                 .catch((error) => {
-                    if (error.response.status === 422) {
-                        this.errors = error.response.data.errors;
-                    }
+                    console.log(error);
                 });
         },
-
         async getAllDepartment() {
-            const token =
-                "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiOGJmMWNjMmE3MGZmZDUyOWYzMDFmM2U2OGI4YWMyZDhiYTdjNmNkOTY5MzcwZmM3YjQ3YzE2NGUyMjRiNjcwMDYwM2FlYTM2YjUxZjc3MzMiLCJpYXQiOjE3MDEyMDU5ODQuMTEwNjc4LCJuYmYiOjE3MDEyMDU5ODQuMTEwNjg2LCJleHAiOjE3MzI4MjgzODMuODQ3OTczLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.DhcQSYIbw-FPaLCqf2NozhA4Gu9zzCTtlt_G3gkRsLgXgXqBVGJMVLltGNt_cIxUTzs5tTLv0HbPul50gi-lo7oqs3OoEVETXrgao-jDkbGvXZcFI-TpPlOjYh97wgrHzuucy-sjoYTO5cDgfoc6tFtncNE2zrgLTLVLE7RVeASJJh5d4B2-jdAGxlCfFap2XHRHSVWCRges6e2rSZ4jg5lnrFKKCgyo_dhiP32rgESO40ymojZQXa3zDtIjGYB-6xRvQxsGK-rqP1lyNvI0sQU532d2wOXGea5_mAW1qZDPHAPpI_QDFWUEzr3_bMQCZ7NlKSuv0G93PymSkD0z8focwtaX-8hwQqYYWTY0Ukb9ZjKoORvtslMsZ9RcqUFXnyfzyeOzMJA0WUS2LH6L5Hs5EL11n_gyrKTj6L55PXDcbxMR2DeLfEGh02JSrgDzq5Ygpv6zXpauNOvaVql8TuB2QqycjuRTS7fHKxlQ4alIWSdLgz1_8RZHIprq-IujKl8naVgIsocrvUS4lpDLWLUIfQHEhJPtu90URiR8fY91foU_y6d2E5sMdDGt11A_uInePclftpZBpTWZNZxtw5mqoD_jKh2rupXegKRKBN2cGGlmyj7kfHdqvYdDmI2gf2mlW8gmBDajHXdX8M__738ayJhkcgG1RaZQCOs-6mg";
+            const token = localStorage.getItem("accessToken");
 
             const result = await axios.get("/api/v1/department/list", {
                 headers: {
@@ -153,8 +152,7 @@ export default {
             this.departments = result.data.data;
         },
         async getAllAchievement() {
-            const token =
-                "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiOGJmMWNjMmE3MGZmZDUyOWYzMDFmM2U2OGI4YWMyZDhiYTdjNmNkOTY5MzcwZmM3YjQ3YzE2NGUyMjRiNjcwMDYwM2FlYTM2YjUxZjc3MzMiLCJpYXQiOjE3MDEyMDU5ODQuMTEwNjc4LCJuYmYiOjE3MDEyMDU5ODQuMTEwNjg2LCJleHAiOjE3MzI4MjgzODMuODQ3OTczLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.DhcQSYIbw-FPaLCqf2NozhA4Gu9zzCTtlt_G3gkRsLgXgXqBVGJMVLltGNt_cIxUTzs5tTLv0HbPul50gi-lo7oqs3OoEVETXrgao-jDkbGvXZcFI-TpPlOjYh97wgrHzuucy-sjoYTO5cDgfoc6tFtncNE2zrgLTLVLE7RVeASJJh5d4B2-jdAGxlCfFap2XHRHSVWCRges6e2rSZ4jg5lnrFKKCgyo_dhiP32rgESO40ymojZQXa3zDtIjGYB-6xRvQxsGK-rqP1lyNvI0sQU532d2wOXGea5_mAW1qZDPHAPpI_QDFWUEzr3_bMQCZ7NlKSuv0G93PymSkD0z8focwtaX-8hwQqYYWTY0Ukb9ZjKoORvtslMsZ9RcqUFXnyfzyeOzMJA0WUS2LH6L5Hs5EL11n_gyrKTj6L55PXDcbxMR2DeLfEGh02JSrgDzq5Ygpv6zXpauNOvaVql8TuB2QqycjuRTS7fHKxlQ4alIWSdLgz1_8RZHIprq-IujKl8naVgIsocrvUS4lpDLWLUIfQHEhJPtu90URiR8fY91foU_y6d2E5sMdDGt11A_uInePclftpZBpTWZNZxtw5mqoD_jKh2rupXegKRKBN2cGGlmyj7kfHdqvYdDmI2gf2mlW8gmBDajHXdX8M__738ayJhkcgG1RaZQCOs-6mg";
+            const token = localStorage.getItem("accessToken");
 
             const result = await axios.get("/api/v1/achievement/list", {
                 headers: {
@@ -165,10 +163,32 @@ export default {
 
             this.achievements = result.data.data;
         },
+        async getEditUser() {
+            const token = localStorage.getItem("accessToken");
+            const id = this.$route.params.id;
+
+            const result = await axios.get(`/api/v1/employee/show/${id}`, {
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest",
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            this.employee.name = result.data.data.name;
+            this.employee.email = result.data.data.email;
+            this.employee.address = result.data.data.address;
+            this.employee.phone = result.data.data.phone;
+            this.employee.department_id = result.data.data.department_id;
+
+            result.data.data.achievement.forEach((data) => {
+                this.employee.achievement_id.push(data.id);
+            });
+        },
     },
     mounted() {
         this.getAllDepartment();
         this.getAllAchievement();
+        this.getEditUser();
     },
 };
 </script>

@@ -121,8 +121,7 @@ export default {
     },
     methods: {
         async handleEmployeeCreate() {
-            const token =
-                "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiOGJmMWNjMmE3MGZmZDUyOWYzMDFmM2U2OGI4YWMyZDhiYTdjNmNkOTY5MzcwZmM3YjQ3YzE2NGUyMjRiNjcwMDYwM2FlYTM2YjUxZjc3MzMiLCJpYXQiOjE3MDEyMDU5ODQuMTEwNjc4LCJuYmYiOjE3MDEyMDU5ODQuMTEwNjg2LCJleHAiOjE3MzI4MjgzODMuODQ3OTczLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.DhcQSYIbw-FPaLCqf2NozhA4Gu9zzCTtlt_G3gkRsLgXgXqBVGJMVLltGNt_cIxUTzs5tTLv0HbPul50gi-lo7oqs3OoEVETXrgao-jDkbGvXZcFI-TpPlOjYh97wgrHzuucy-sjoYTO5cDgfoc6tFtncNE2zrgLTLVLE7RVeASJJh5d4B2-jdAGxlCfFap2XHRHSVWCRges6e2rSZ4jg5lnrFKKCgyo_dhiP32rgESO40ymojZQXa3zDtIjGYB-6xRvQxsGK-rqP1lyNvI0sQU532d2wOXGea5_mAW1qZDPHAPpI_QDFWUEzr3_bMQCZ7NlKSuv0G93PymSkD0z8focwtaX-8hwQqYYWTY0Ukb9ZjKoORvtslMsZ9RcqUFXnyfzyeOzMJA0WUS2LH6L5Hs5EL11n_gyrKTj6L55PXDcbxMR2DeLfEGh02JSrgDzq5Ygpv6zXpauNOvaVql8TuB2QqycjuRTS7fHKxlQ4alIWSdLgz1_8RZHIprq-IujKl8naVgIsocrvUS4lpDLWLUIfQHEhJPtu90URiR8fY91foU_y6d2E5sMdDGt11A_uInePclftpZBpTWZNZxtw5mqoD_jKh2rupXegKRKBN2cGGlmyj7kfHdqvYdDmI2gf2mlW8gmBDajHXdX8M__738ayJhkcgG1RaZQCOs-6mg";
+            const token = localStorage.getItem("accessToken");
 
             const formData = new FormData();
             formData.append("name", this.employee.name);
