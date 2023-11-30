@@ -9,7 +9,9 @@ import EmployeeCreate from './components/Employee/EmployeeCreate.vue';
 import NotFound from './components/NotFound/NotFound.vue';
 import routes from './router/index.js';
 import ToastPlugin from 'vue-toast-notification';
+import {LoadingPlugin} from 'vue-loading-overlay';
 import 'vue-toast-notification/dist/theme-bootstrap.css';
+import 'vue-loading-overlay/dist/css/index.css';
 import './bootstrap';
  
 const app = createApp({
@@ -26,6 +28,7 @@ const app = createApp({
 });
 
 app.use(routes)
+app.use(LoadingPlugin);
 app.use(ToastPlugin);
 app.mount('#app');
 

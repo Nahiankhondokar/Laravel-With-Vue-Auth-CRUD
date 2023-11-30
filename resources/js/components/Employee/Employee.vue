@@ -79,8 +79,14 @@ export default {
     methods: {
         async getAllEmployee() {
             try {
-                const token = localStorage.getItem("accessToken");
+                // vue overlay loader
+                let loader = this.$loading.show({
+                    container: this.fullPage ? null : this.$refs.formContainer,
+                    canCancel: true,
+                    onCancel: this.onCancel,
+                });
 
+                const token = localStorage.getItem("accessToken");
                 const response = await axios.get("/api/v1/employee/list", {
                     headers: {
                         "X-Requested-With": "XMLHttpRequest",
@@ -89,6 +95,7 @@ export default {
                 });
 
                 this.employees = response.data.data.data;
+                loader.hide();
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -104,6 +111,16 @@ export default {
                 confirmButtonText: "Yes, delete it!",
             }).then((result) => {
                 if (result.isConfirmed) {
+                    // vue overlay loader
+                    let loader = this.$loading.show({
+                        container: this.fullPage
+                            ? null
+                            : this.$refs.formContainer,
+                        canCancel: true,
+                        onCancel: this.onCancel,
+                    });
+
+                    // Api call with token
                     const token = localStorage.getItem("accessToken");
                     axios
                         .get(`/api/v1/employee/delete/${id}`, {
@@ -113,12 +130,14 @@ export default {
                             },
                         })
                         .then((response) => {
+                            // response back from backend
                             this.employees = response.data.data;
                             this.$toast.open({
                                 message: response.data.message,
                                 type: "success",
                             });
                             this.getAllEmployee();
+                            loader.hide();
                         })
                         .catch((error) => {
                             console.log(error.message);

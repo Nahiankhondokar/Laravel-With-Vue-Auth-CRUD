@@ -101,6 +101,12 @@ export default {
     },
     methods: {
         async handleEmployeeUpdate() {
+            // vue overlay loader
+            let loader = this.$loading.show({
+                container: this.fullPage ? null : this.$refs.formContainer,
+                canCancel: true,
+                onCancel: this.onCancel,
+            });
             const token = localStorage.getItem("accessToken");
 
             const formData = new FormData();
@@ -134,12 +140,20 @@ export default {
                         message: response.data.message,
                         type: "success",
                     });
+                    loader.hide();
                 })
                 .catch((error) => {
                     console.log(error);
                 });
         },
         async getAllDepartment() {
+            // vue overlay loader
+            let loader = this.$loading.show({
+                container: this.fullPage ? null : this.$refs.formContainer,
+                canCancel: true,
+                onCancel: this.onCancel,
+            });
+
             const token = localStorage.getItem("accessToken");
 
             const result = await axios.get("/api/v1/department/list", {
@@ -150,8 +164,16 @@ export default {
             });
 
             this.departments = result.data.data;
+            loader.hide();
         },
         async getAllAchievement() {
+            // vue overlay loader
+            let loader = this.$loading.show({
+                container: this.fullPage ? null : this.$refs.formContainer,
+                canCancel: true,
+                onCancel: this.onCancel,
+            });
+
             const token = localStorage.getItem("accessToken");
 
             const result = await axios.get("/api/v1/achievement/list", {
@@ -162,6 +184,7 @@ export default {
             });
 
             this.achievements = result.data.data;
+            loader.hide();
         },
         async getEditUser() {
             const token = localStorage.getItem("accessToken");
