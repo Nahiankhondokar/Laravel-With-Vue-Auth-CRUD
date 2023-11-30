@@ -57,12 +57,13 @@ class EmployeeController extends Controller
         $employee = Employee::query()
         ->where('name', 'LIKE', $terms)
         ->orWhere('phone', 'LIKE', $terms)
+        ->orderByDesc('id')
         ->get();
 
         if($employee->isEmpty()){
             return $this->apiErrorResponse('Data not found!');
         }
-          
+          $employee->load('department', 'achievement');
         return $this->apiSuccessResponse('Employee search result', $employee);
     }
 }

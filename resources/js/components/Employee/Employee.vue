@@ -2,11 +2,20 @@
     <div class="container">
         <div class="employee_table">
             <h3 class="text-center">Employee List</h3>
+
             <router-link
                 :to="{ name: 'employee-create' }"
-                class="btn btn-sm bg-primary text-white float-right mb-1"
+                class="btn btn-sm bg-primary text-white float-right mb-1 ml-2"
                 >Create</router-link
             >
+            <div class="employee-searach float-right">
+                <input
+                    type="search"
+                    placeholder="Search"
+                    v-model="search"
+                    @keyup="employeeSearch"
+                />
+            </div>
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -30,11 +39,20 @@
                         <td>{{ employee.email }}</td>
                         <td>{{ employee.phone }}</td>
                         <td>{{ employee.address }}</td>
-                        <td>{{ employee.department.name }}</td>
+                        <td>
+                            {{
+                                employee.department.name
+                                    ? employee.department.name
+                                    : "None"
+                            }}
+                        </td>
                         <td>
                             <ul>
                                 <li v-for="item in employee.achievement">
-                                    {{ item.name }}
+                                    <span v-if="item.name">{{
+                                        item.name
+                                    }}</span>
+                                    <span v-else>None</span>
                                 </li>
                             </ul>
                         </td>
@@ -74,6 +92,7 @@ export default {
     data() {
         return {
             employees: [],
+            search: "",
         };
     },
     methods: {
@@ -144,6 +163,29 @@ export default {
                         });
                 }
             });
+        },
+        employeeSearch() {
+            // vue overlay loader
+            let loader = this.$loading.show({
+                container: this.fullPage ? null : this.$refs.formContainer,
+                canCancel: true,
+                onCancel: this.onCancel,
+            });
+
+            const token = localStorage.getItem("accessToken");
+            axios
+                .get(`/api/v1/employee/search?search=${this.search}`, {
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+                .then((response) => {
+                    console.log(response.data.data);
+                    this.employees = response.data.data;
+                    loader.hide();
+                })
+                .catch((error) => console.log(error.message));
         },
     },
     mounted() {
