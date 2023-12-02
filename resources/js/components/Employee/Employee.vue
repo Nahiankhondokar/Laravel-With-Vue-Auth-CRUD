@@ -80,6 +80,8 @@
                     </tr>
                 </tbody>
             </table>
+            <span>pagination</span>
+            <v-pagination :length="4"></v-pagination>
         </div>
     </div>
 </template>

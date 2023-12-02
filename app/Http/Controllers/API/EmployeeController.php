@@ -15,7 +15,7 @@ class EmployeeController extends Controller
         $employee = Employee::query()
         ->with('department', 'achievement')
         ->orderByDesc('id')
-        ->paginate(15);
+        ->paginate(5);
         return $this->apiSuccessResponse('Employee list', $employee);
     }
 

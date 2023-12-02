@@ -10,6 +10,7 @@ import NotFound from './components/NotFound/NotFound.vue';
 import routes from './router/index.js';
 import ToastPlugin from 'vue-toast-notification';
 import {LoadingPlugin} from 'vue-loading-overlay';
+import Paginate from 'vuejs-paginate'
 import 'vue-toast-notification/dist/theme-bootstrap.css';
 import 'vue-loading-overlay/dist/css/index.css';
 import './bootstrap';
@@ -27,6 +28,7 @@ const app = createApp({
     },
 });
 
+app.component('paginate', Paginate)
 app.use(routes)
 app.use(LoadingPlugin);
 app.use(ToastPlugin);
