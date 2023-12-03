@@ -34,7 +34,7 @@
                         v-for="(employee, index) in employees"
                         :key="employee.id"
                     >
-                        <th scope="row">{{ index + 1 }}</th>
+                        <th scope="row">{{ calculateSerialNumber(index) }}</th>
                         <td>{{ employee.name }}</td>
                         <td>{{ employee.email }}</td>
                         <td>{{ employee.phone }}</td>
@@ -80,21 +80,40 @@
                     </tr>
                 </tbody>
             </table>
-            <span>pagination</span>
-            <v-pagination :length="4"></v-pagination>
+            <div
+                class="paginate-area"
+                style="
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                "
+            >
+                <pagination
+                    :currentPage="currentPage"
+                    :lastPage="lastPage"
+                    @page-changed="handlePageChange"
+                ></pagination>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 import Swal from "sweetalert2";
+import Pagination from "./../Pagination/Pagination.vue";
 
 export default {
     name: "Employee",
+    components: {
+        Pagination,
+    },
     data() {
         return {
             employees: [],
             search: "",
+            currentPage: 1,
+            lastPage: 0,
+            perPage: 0,
         };
     },
     methods: {
@@ -116,6 +135,8 @@ export default {
                 });
 
                 this.employees = response.data.data.data;
+                this.lastPage = response.data.data.last_page;
+                this.perPage = response.data.data.per_page;
                 loader.hide();
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -189,9 +210,29 @@ export default {
                 })
                 .catch((error) => console.log(error.message));
         },
+        calculateSerialNumber(index) {
+            return (this.currentPage - 1) * this.perPage + index + 1;
+        },
+        async handlePageChange(pageNumber = 1) {
+            // Handle the page change event here, e.g., fetch data for the new page
+            const token = localStorage.getItem("accessToken");
+            const response = await axios.get(
+                `/api/v1/employee/list?page=${pageNumber}`,
+                {
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            this.employees = response.data.data.data;
+            this.currentPage = response.data.data.current_page;
+        },
     },
     mounted() {
         this.getAllEmployee();
+        this.handlePageChange();
     },
 };
 </script>
