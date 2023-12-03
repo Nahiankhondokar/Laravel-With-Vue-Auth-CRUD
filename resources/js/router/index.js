@@ -55,15 +55,14 @@ const router = createRouter({
     routes
 });
 
-// router.beforeEach( async (to, from) => {
-//     if(to.path !== '/login'){
-//         const token = localStorage.getItem('accessToken');
-//         if(!token){
-            
-//         }
-//     }else {
-//         console.log('login');
-//     }
-// });
+// Auth checking guard
+router.beforeEach((to, from) => {
+    if(to.path !== '/login'){
+        const token = localStorage.getItem('accessToken');
+        if(!token){
+            return "/login";
+        }
+    }
+});
 
 export default router;
