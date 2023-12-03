@@ -9,7 +9,7 @@ import NotFound from '../components//NotFound/NotFound.vue';
 
 const routes = [
     {
-        path : '/',
+        path : '/login',
         component : Login,
         name : 'login'
     },
@@ -54,5 +54,16 @@ const router = createRouter({
     history : createWebHistory(),
     routes
 });
+
+// router.beforeEach( async (to, from) => {
+//     if(to.path !== '/login'){
+//         const token = localStorage.getItem('accessToken');
+//         if(!token){
+            
+//         }
+//     }else {
+//         console.log('login');
+//     }
+// });
 
 export default router;

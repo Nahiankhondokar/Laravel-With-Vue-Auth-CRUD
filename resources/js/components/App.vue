@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="menu">
+        <div class="menu" v-if="isLoggedIn">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="#">Dashboard</a>
@@ -33,7 +33,22 @@
                                 >
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Logout</a>
+                                <router-link
+                                    v-if="!isLoggedIn"
+                                    class="nav-link"
+                                    :to="{ name: 'login' }"
+                                    >LogIn</router-link
+                                >
+                            </li>
+
+                            <li class="nav-item">
+                                <a
+                                    v-if="isLoggedIn"
+                                    class="nav-link"
+                                    @click.prevent="handleUserLogout"
+                                    href="#"
+                                    >LogOut</a
+                                >
                             </li>
                         </ul>
                     </div>
@@ -47,6 +62,41 @@
 <script>
 export default {
     name: "App",
+    data() {
+        return {
+            isLoggedIn: false,
+        };
+    },
+    methods: {
+        userLoggedInCheck() {
+            const token = localStorage.getItem("accessToken");
+            if (!token) {
+                this.isLoggedIn = false;
+            } else {
+                this.isLoggedIn = true;
+            }
+        },
+        async handleUserLogout() {
+            const token = localStorage.getItem("accessToken");
+            await axios
+                .get("/api/v1/logout", {
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+                .then((response) => {
+                    console.log(response);
+                    localStorage.removeItem("accessToken");
+                    this.$router.push("/login");
+                    this.isLoggedIn = false;
+                })
+                .catch((error) => console.log(error.message));
+        },
+    },
+    mounted() {
+        this.userLoggedInCheck();
+    },
 };
 </script>
 <style scoped></style>

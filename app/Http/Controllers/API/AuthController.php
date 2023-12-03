@@ -45,7 +45,7 @@ class AuthController extends Controller
     {
         $user = Auth::user();
         if(!$user){
-            return $this->apiSuccessResponse('Unauthorized');
+            return $this->apiErrorResponse('Unauthorized');
         }
         
         return $this->apiSuccessResponse('User information', $user);
