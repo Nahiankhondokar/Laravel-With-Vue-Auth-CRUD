@@ -27,7 +27,7 @@ const app = createApp({
     },
 });
 
-app.use(routes)
+app.use(routes);
 app.use(LoadingPlugin);
 app.use(ToastPlugin);
 app.mount('#app');

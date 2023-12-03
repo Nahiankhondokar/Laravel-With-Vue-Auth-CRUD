@@ -26,7 +26,7 @@ const routes = [
     {
         path : '/employee',
         component : Employee,
-        name : 'employee'
+        name : 'employee',
     },
     {
         path : '/employee-create',
@@ -56,13 +56,18 @@ const router = createRouter({
 });
 
 // Auth checking guard
-router.beforeEach((to, from) => {
-    if(to.path !== '/login'){
-        const token = localStorage.getItem('accessToken');
-        if(!token){
-            return "/login";
-        }
+router.beforeEach((to, from, next) => {
+    const token = localStorage.getItem('accessToken');
+    
+    if (to.path === '/login' || to.path === '/register') {
+      return next();
     }
-});
+  
+    if (!token) {
+      return next('/login');
+    }
+
+    next();
+  });
 
 export default router;
