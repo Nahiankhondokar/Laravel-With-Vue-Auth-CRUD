@@ -5,7 +5,7 @@
 
             <router-link
                 :to="{ name: 'employee-create' }"
-                class="btn btn-sm bg-primary text-white float-right mb-1 ml-2"
+                class="btn btn-sm bg-info font-weight-bold text-white float-right mb-1 ml-2"
                 >Create</router-link
             >
             <div class="employee-searach float-right">
@@ -56,26 +56,26 @@
                                 </li>
                             </ul>
                         </td>
-                        <td>
+                        <td style="width: 12%">
                             <a
                                 href=""
                                 class="btn btn-sm bg-primary text-white mr-1"
-                                >View</a
-                            >
+                                ><icon icon="eye"
+                            /></a>
                             <router-link
                                 :to="{
                                     name: 'employee-edit',
                                     params: { id: employee.id },
                                 }"
                                 class="btn btn-sm bg-warning text-white mr-1"
-                                >Edit</router-link
-                            >
+                                ><icon icon="edit" />
+                            </router-link>
                             <a
                                 href=""
                                 @click.prevent="removeEmployee(employee.id)"
                                 class="btn btn-sm bg-danger text-white"
-                                >Delete</a
-                            >
+                                ><icon icon="trash"
+                            /></a>
                         </td>
                     </tr>
                 </tbody>

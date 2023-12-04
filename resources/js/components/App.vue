@@ -15,6 +15,7 @@
                                 <ul class="navbar-nav">
                                     <li class="nav-item">
                                         <router-link
+                                            v-if="isLoggedIn"
                                             class="nav-link text-white font-weight-bold"
                                             aria-current="page"
                                             :to="{ name: 'dashboard' }"
@@ -23,6 +24,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <router-link
+                                            v-if="isLoggedIn"
                                             class="nav-link text-white font-weight-bold"
                                             :to="{ name: 'employee' }"
                                             >Employee</router-link
