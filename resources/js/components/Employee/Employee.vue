@@ -57,11 +57,14 @@
                             </ul>
                         </td>
                         <td style="width: 12%">
-                            <a
-                                href=""
+                            <router-link
+                                :to="{
+                                    name: 'employee-view',
+                                    params: { id: employee.id },
+                                }"
                                 class="btn btn-sm bg-primary text-white mr-1"
-                                ><icon icon="eye"
-                            /></a>
+                                ><icon icon="eye" />
+                            </router-link>
                             <router-link
                                 :to="{
                                     name: 'employee-edit',

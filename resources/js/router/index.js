@@ -3,6 +3,7 @@ import Login from '../components/Auth/Login.vue';
 import Register from '../components/Auth/Register.vue';
 import Employee from '../components/Employee/Employee.vue'; 
 import EmployeeEdit from '../components/Employee/EmployeeEdit.vue'; 
+import EmployeeView from '../components/Employee/EmployeeView.vue'; 
 import EmployeeCreate from '../components/Employee/EmployeeCreate.vue';
 import Dashboard from '../components/Dashboard/Dashboard.vue';
 import NotFound from '../components//NotFound/NotFound.vue';
@@ -37,6 +38,11 @@ const routes = [
         path : '/employee-edit/:id',
         component : EmployeeEdit,
         name : 'employee-edit'
+    },
+    {
+        path : '/employee-view/:id',
+        component : EmployeeView,
+        name : 'employee-view'
     },
     {
         path : '/employee-delete/:id',
