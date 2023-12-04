@@ -50,7 +50,7 @@
                             <ul>
                                 <li v-for="item in employee.achievement">
                                     <span v-if="item.name">{{
-                                        item.name && item.name
+                                        item.name && item.name !== ""
                                             ? item.name
                                             : "None"
                                     }}</span>

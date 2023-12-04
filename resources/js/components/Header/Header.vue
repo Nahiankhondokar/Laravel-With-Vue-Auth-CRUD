@@ -1,8 +1,8 @@
 <template>
     <div class="wrap">
-        <div class="app-body bg-info">
+        <div class="app-body bg-info shadow d-fixed">
             <div class="container">
-                <div class="menu">
+                <div class="menu" v-if="isLoggedIn">
                     <nav class="navbar navbar-expand-lg navbar-light bg-info">
                         <div class="container-fluid">
                             <a class="navbar-brand text-white" href="#"

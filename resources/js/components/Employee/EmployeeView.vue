@@ -2,7 +2,7 @@
     <div class="container">
         <div class="user-details">
             <div class="wraper shadow p-3">
-                <h3 class="text-center mb-3">User Profile</h3>
+                <h3 class="text-center mb-3">Employee Profile</h3>
                 <div class="left-details">
                     <div class="user-items">
                         <div class="title font-weight-bold">Name</div>
