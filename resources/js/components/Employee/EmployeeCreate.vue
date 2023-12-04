@@ -1,7 +1,10 @@
 <template>
     <div class="container">
         <div class="login_form">
-            <form class="bg-light" @submit.prevent="handleEmployeeCreate">
+            <form
+                class="bg-light shadow"
+                @submit.prevent="handleEmployeeCreate"
+            >
                 <h3 class="text-center">Employee Create</h3>
                 <div class="form-group">
                     <label for="inputEmail">Name</label>

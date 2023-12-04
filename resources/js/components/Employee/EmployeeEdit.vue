@@ -1,7 +1,10 @@
 <template>
     <div class="container">
         <div class="login_form">
-            <form class="bg-light" @submit.prevent="handleEmployeeUpdate">
+            <form
+                class="bg-light shadow"
+                @submit.prevent="handleEmployeeUpdate"
+            >
                 <h3 class="text-center">Employee Edit</h3>
                 <div class="form-group">
                     <label for="inputEmail">Name</label>

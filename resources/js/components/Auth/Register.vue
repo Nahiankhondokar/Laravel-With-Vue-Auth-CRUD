@@ -57,7 +57,7 @@
                     />
                 </div>
                 <button type="submit" class="btn btn-primary">Register</button>
-                <router-link :to="{ name: 'login' }" class="btn bg-primary"
+                <router-link :to="{ name: 'login' }" class="btn bg-info"
                     >Have an account</router-link
                 >
             </form>
@@ -124,6 +124,7 @@ export default {
     width: 50%;
     padding: 20px 10px;
     border-radius: 5px;
+    border: 2px solid #ddd9d9;
 }
 .login_form form a {
     float: right;

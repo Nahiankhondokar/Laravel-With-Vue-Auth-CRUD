@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="login_form">
-            <form class="bg-light" @submit.prevent="handleUserLogin">
+            <form class="bg-light shadow" @submit.prevent="handleUserLogin">
                 <h3 class="text-center">Login User</h3>
                 <div class="form-group">
                     <label for="inputEmail">Email</label>
@@ -34,7 +34,7 @@
                     />
                 </div>
                 <button type="submit" class="btn btn-primary">Login</button>
-                <router-link :to="{ name: 'register' }" class="btn bg-primary"
+                <router-link :to="{ name: 'register' }" class="btn bg-info"
                     >Register an account</router-link
                 >
             </form>
@@ -112,6 +112,7 @@ export default {
     width: 50%;
     padding: 20px 10px;
     border-radius: 5px;
+    border: 2px solid #ddd9d9;
 }
 
 .login_form form a {

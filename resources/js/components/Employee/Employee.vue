@@ -16,7 +16,7 @@
                     @keyup="employeeSearch"
                 />
             </div>
-            <table class="table table-striped">
+            <table class="table table-striped shadow">
                 <thead>
                     <tr>
                         <th scope="col">SL</th>
