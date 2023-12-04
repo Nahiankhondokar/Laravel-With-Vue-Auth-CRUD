@@ -66,14 +66,11 @@ router.beforeEach((to, from, next) => {
     const token = localStorage.getItem('accessToken');
     
     if (to.path === '/login' || to.path === '/register') {
-        console.log('login');
         if(token){
-            console.log('path', from);
             return next({name : 'notfound'});
         }else {
             return next();
         }
-        
    }
   
     if (!token) {
