@@ -50,7 +50,9 @@
                             <ul>
                                 <li v-for="item in employee.achievement">
                                     <span v-if="item.name">{{
-                                        item.name
+                                        item.name && item.name
+                                            ? item.name
+                                            : "None"
                                     }}</span>
                                     <span v-else>None</span>
                                 </li>
@@ -83,14 +85,12 @@
                     </tr>
                 </tbody>
             </table>
-            <div
-                class="paginate-area"
-                style="
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                "
-            >
+            <div class="paginate-area">
+                <span
+                    class="font-weight-bold text-danger"
+                    style="text-align: center"
+                    >{{ employees.length === 0 ? "Data not found" : "" }}</span
+                >
                 <pagination
                     :currentPage="currentPage"
                     :lastPage="lastPage"
@@ -243,5 +243,20 @@ export default {
 <style scoped>
 .employee_table {
     margin: 2rem 0rem;
+}
+
+.paginate-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.employee-searach input {
+    border: 2px solid #d7d7d7;
+    border-radius: 5px;
+    padding: 2px 10px;
+    font-weight: 500;
+    outline: none;
 }
 </style>

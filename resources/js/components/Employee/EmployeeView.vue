@@ -66,7 +66,6 @@ export default {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            console.log(result.data.data);
             this.employee = result.data.data;
             loader.hide();
         },

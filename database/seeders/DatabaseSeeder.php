@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         \App\Models\Department::factory(10)->create();
-        \App\Models\Achievement::factory(10)->create();
+        $this->call([AchievementSeeder::class]);
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

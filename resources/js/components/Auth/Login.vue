@@ -77,7 +77,7 @@ export default {
                 "X-Requested-With": "XMLHttpRequest",
             };
 
-            await axios
+            await this.login
                 .post("/api/v1/login", formData, { headers })
                 .then((response) => {
                     localStorage.setItem(
@@ -92,7 +92,15 @@ export default {
                         type: "success",
                     });
                 })
-                .catch((error) => console.log(error.message));
+                .catch((error) => {
+                    loader.hide();
+                    if (error.response.status == 401) {
+                        this.$toast.open({
+                            message: error.response.data.message,
+                            type: "warning",
+                        });
+                    }
+                });
         },
     },
 };
