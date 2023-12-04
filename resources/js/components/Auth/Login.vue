@@ -33,8 +33,12 @@
                         class="text-danger"
                     />
                 </div>
-                <button type="submit" class="btn btn-primary">Login</button>
-                <router-link :to="{ name: 'register' }" class="btn bg-info"
+                <button type="submit" class="btn btn-primary font-weight-bold">
+                    Login
+                </button>
+                <router-link
+                    :to="{ name: 'register' }"
+                    class="btn bg-info font-weight-bold"
                     >Register an account</router-link
                 >
             </form>
@@ -121,6 +125,14 @@ export default {
     padding: 20px 10px;
     border-radius: 5px;
     border: 2px solid #ddd9d9;
+}
+
+.login_form h3 {
+    background: #17a2b8;
+    padding: 10px 15px;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
 }
 
 .login_form form a {

@@ -2,7 +2,7 @@
     <div class="container">
         <div class="login_form">
             <form class="bg-light" @submit.prevent="handleUserRegistration">
-                <h3 class="text-center">Register User</h3>
+                <h3 class="text-center">User Registration</h3>
                 <div class="form-group">
                     <label for="inputEmail">Name</label>
                     <input
@@ -56,8 +56,12 @@
                         v-model="login.password_confirmation"
                     />
                 </div>
-                <button type="submit" class="btn btn-primary">Register</button>
-                <router-link :to="{ name: 'login' }" class="btn bg-info"
+                <button type="submit" class="btn btn-primary font-weight-bold">
+                    Register
+                </button>
+                <router-link
+                    :to="{ name: 'login' }"
+                    class="btn bg-info font-weight-bold"
                     >Have an account</router-link
                 >
             </form>
@@ -82,8 +86,15 @@ export default {
         };
     },
     methods: {
-        handleUserRegistration() {
-            this.login
+        async handleUserRegistration() {
+            // vue overlay loader
+            let loader = this.$loading.show({
+                container: this.fullPage ? null : this.$refs.formContainer,
+                canCancel: true,
+                onCancel: this.onCancel,
+            });
+
+            await this.login
                 .post("/api/v1/register", {
                     name: this.name,
                     email: this.email,
@@ -92,10 +103,20 @@ export default {
                 })
                 .then((res) => {
                     this.$router.push({ path: "/" });
+                    loader.hide();
                     this.$toast.open({
                         message: res.data.message,
                         type: "success",
                     });
+                })
+                .catch((error) => {
+                    loader.hide();
+                    if (error.response.status == 401) {
+                        this.$toast.open({
+                            message: error.response.data.message,
+                            type: "warning",
+                        });
+                    }
                 });
         },
         getAuthUser() {
@@ -129,5 +150,12 @@ export default {
 .login_form form a {
     float: right;
     color: white;
+}
+.login_form h3 {
+    background: #17a2b8;
+    padding: 10px 15px;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
 }
 </style>

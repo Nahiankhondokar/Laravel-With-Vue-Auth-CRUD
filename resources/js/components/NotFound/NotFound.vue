@@ -3,7 +3,7 @@
         <div class="notfound-body">
             <h3 class="text-center text-light">Page NotFound</h3>
             <router-link
-                to="/employee"
+                to="/dashboard"
                 class="text-center bg-info text-white p-2 w-25"
                 >Home</router-link
             >
