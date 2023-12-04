@@ -6,6 +6,7 @@ import Dashboard from './components/Dashboard/Dashboard.vue';
 import EmployeeEdit from './components/Employee/EmployeeEdit.vue';
 import App from './components/App.vue';
 import EmployeeCreate from './components/Employee/EmployeeCreate.vue';
+import Store from './components/Store/Store.js';
 import NotFound from './components/NotFound/NotFound.vue';
 import routes from './router/index.js';
 import ToastPlugin from 'vue-toast-notification';
@@ -27,6 +28,7 @@ const app = createApp({
     },
 });
 
+app.use(Store);
 app.use(routes);
 app.use(LoadingPlugin);
 app.use(ToastPlugin);

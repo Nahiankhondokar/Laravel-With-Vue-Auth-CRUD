@@ -1,59 +1,54 @@
 <template>
-    <div class="container">
-        <div class="menu" v-if="isLoggedIn">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="#">Dashboard</a>
-                    <button
-                        class="navbar-toggler"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarNav"
-                        aria-controls="navbarNav"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
-                    >
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <router-link
-                                    class="nav-link active"
-                                    aria-current="page"
-                                    :to="{ name: 'dashboard' }"
-                                    >Home</router-link
-                                >
-                            </li>
-                            <li class="nav-item">
-                                <router-link
-                                    class="nav-link"
-                                    :to="{ name: 'employee' }"
-                                    >Employee</router-link
-                                >
-                            </li>
-                            <li class="nav-item">
-                                <router-link
-                                    v-if="!isLoggedIn"
-                                    class="nav-link"
-                                    :to="{ name: 'login' }"
-                                    >LogIn</router-link
-                                >
-                            </li>
-
-                            <li class="nav-item">
-                                <a
-                                    v-if="isLoggedIn"
-                                    class="nav-link"
-                                    @click.prevent="handleUserLogout"
-                                    href="#"
-                                    >LogOut</a
-                                >
-                            </li>
-                        </ul>
-                    </div>
+    <div class="wrap">
+        <div class="app-body bg-info">
+            <div class="container">
+                <div class="menu">
+                    <nav class="navbar navbar-expand-lg navbar-light bg-info">
+                        <div class="container-fluid">
+                            <a class="navbar-brand text-white" href="#"
+                                >Site Logo</a
+                            >
+                            <div
+                                class="collapse navbar-collapse"
+                                id="navbarNav"
+                            >
+                                <ul class="navbar-nav">
+                                    <li class="nav-item">
+                                        <router-link
+                                            class="nav-link text-white font-weight-bold"
+                                            aria-current="page"
+                                            :to="{ name: 'dashboard' }"
+                                            >Home</router-link
+                                        >
+                                    </li>
+                                    <li class="nav-item">
+                                        <router-link
+                                            class="nav-link text-white font-weight-bold"
+                                            :to="{ name: 'employee' }"
+                                            >Employee</router-link
+                                        >
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="logout-btn">
+                            <router-link
+                                v-if="!isLoggedIn"
+                                class="nav-link text-white font-weight-bold"
+                                :to="{ name: 'login' }"
+                                >Login</router-link
+                            >
+                            <a
+                                v-if="isLoggedIn"
+                                class="nav-link text-white font-weight-bold"
+                                @click.prevent="handleUserLogout"
+                                href="#"
+                                >Logout</a
+                            >
+                        </div>
+                    </nav>
                 </div>
-            </nav>
+            </div>
         </div>
         <router-view />
     </div>
@@ -64,19 +59,31 @@ export default {
     name: "App",
     data() {
         return {
-            isLoggedIn: false,
+            isLoggedIn: null,
         };
+    },
+    computed: {
+        isLoggedIn() {
+            return (this.isLoggedIn = this.$store.state.isLoggedIn);
+        },
     },
     methods: {
         userLoggedInCheck() {
             const token = localStorage.getItem("accessToken");
             if (!token) {
-                this.isLoggedIn = false;
+                this.$store.commit("setLoggedIn", false);
             } else {
-                this.isLoggedIn = true;
+                this.$store.commit("setLoggedIn", true);
             }
         },
         async handleUserLogout() {
+            // vue overlay loader
+            let loader = this.$loading.show({
+                container: this.fullPage ? null : this.$refs.formContainer,
+                canCancel: true,
+                onCancel: this.onCancel,
+            });
+
             const token = localStorage.getItem("accessToken");
             await axios
                 .get("/api/v1/logout", {
@@ -86,10 +93,10 @@ export default {
                     },
                 })
                 .then((response) => {
-                    console.log(response);
                     localStorage.removeItem("accessToken");
                     this.$router.push("/login");
-                    this.isLoggedIn = false;
+                    this.$store.commit("setLoggedIn", false);
+                    loader.hide();
                 })
                 .catch((error) => console.log(error.message));
         },
@@ -99,4 +106,12 @@ export default {
     },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.app-body {
+    width: 100%;
+}
+
+.logout-btn {
+    float: right !important;
+}
+</style>

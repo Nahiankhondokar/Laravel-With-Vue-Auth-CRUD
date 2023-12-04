@@ -10,7 +10,12 @@
                         class="form-control"
                         id="inputEmail"
                         placeholder="Email"
-                        v-model="email"
+                        v-model="login.email"
+                    />
+                    <div
+                        v-if="login.errors.has('email')"
+                        v-html="login.errors.get('email')"
+                        class="text-danger"
                     />
                 </div>
                 <div class="form-group">
@@ -20,7 +25,12 @@
                         class="form-control"
                         id="inputPassword"
                         placeholder="Password"
-                        v-model="password"
+                        v-model="login.password"
+                    />
+                    <div
+                        v-if="login.errors.has('password')"
+                        v-html="login.errors.get('password')"
+                        class="text-danger"
                     />
                 </div>
                 <button type="submit" class="btn btn-primary">Login</button>
@@ -33,26 +43,56 @@
 </template>
 
 <script>
+import Form from "vform";
+import App from "./../App.vue";
+
 export default {
     name: "Login",
+    components: {
+        App,
+    },
     data() {
         return {
-            email: "",
-            password: "",
+            login: new Form({
+                email: "",
+                password: "",
+            }),
+            isLoggedIn: false,
         };
     },
     methods: {
-        handleUserLogin() {
-            axios
-                .post("http://localhost:8000/api/v1/login", {
-                    email: this.email,
-                    password: this.password,
+        async handleUserLogin() {
+            // vue overlay loader
+            let loader = this.$loading.show({
+                container: this.fullPage ? null : this.$refs.formContainer,
+                canCancel: true,
+                onCancel: this.onCancel,
+            });
+
+            const formData = new FormData();
+            formData.append("email", this.login.email);
+            formData.append("password", this.login.password);
+
+            const headers = {
+                "X-Requested-With": "XMLHttpRequest",
+            };
+
+            await axios
+                .post("/api/v1/login", formData, { headers })
+                .then((response) => {
+                    localStorage.setItem(
+                        "accessToken",
+                        response.data.accessToken
+                    );
+                    this.$store.commit("setLoggedIn", true);
+                    this.$router.push({ name: "employee" });
+                    loader.hide();
+                    this.$toast.open({
+                        message: response.data.message,
+                        type: "success",
+                    });
                 })
-                .thne((res) => {
-                    console.log();
-                })
-                .catch();
-            console.log($e.target.value.email);
+                .catch((error) => console.log(error.message));
         },
     },
 };
