@@ -222,6 +222,14 @@ export default {
     margin: 2rem 0rem;
 }
 
+.login_form h3 {
+    background: #17a2b8;
+    padding: 10px 15px;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
 .login_form form {
     width: 50%;
     padding: 20px 10px;

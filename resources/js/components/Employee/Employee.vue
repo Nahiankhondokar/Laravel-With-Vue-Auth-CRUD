@@ -259,4 +259,12 @@ export default {
     font-weight: 500;
     outline: none;
 }
+
+.employee_table h3 {
+    background: #17a2b8;
+    padding: 10px 15px;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+}
 </style>

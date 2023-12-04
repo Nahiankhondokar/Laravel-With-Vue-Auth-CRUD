@@ -103,4 +103,12 @@ export default {
     justify-content: space-between;
     align-items: center;
 }
+
+.wraper h3 {
+    background: #17a2b8;
+    padding: 10px 15px;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+}
 </style>
